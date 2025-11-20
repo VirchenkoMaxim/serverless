@@ -1,4 +1,5 @@
-name: Deploy Cloud Function
+name: Deploy Cloud Function V2
+
 on:
   push:
     branches:
@@ -17,12 +18,20 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }} # Use the secret created earlier
 
-      - name: 🚀 Deploy Cloud Function
+      - name: 🚀 Deploy Cloud Function (V2)
         uses: google-github-actions/deploy-cloud-functions@v2
         with:
-          name: helloHttpFunction # **Required:** The name you want for your deployed function
-          runtime: nodejs20 # **Required:** Must match the runtime you're using (e.g., nodejs20)
-          entry_point: helloHttp # **Required:** The name of the function exported in your code
-          project_id: quixotic-folio-478710-e6 # **Optional:** Your GCP Project ID (or compute from environment)
-          region: us-central1 # **Optional:** The deployment region
-          source_dir: ./ # **Optional:** Path to the function source code (defaults to repo root)
+          name: helloHttp # Use a new name to distinguish it from V1
+          runtime: nodejs20 # Ensure this is a V2-compatible runtime
+          entry_point: helloHttp
+          project_id: quixotic-folio-478710-e6
+          region: us-central1
+          source_dir: ./
+          # ⭐ Key change for V2 deployment ⭐
+          # This flag enables deployment using Cloud Functions 2nd Generation, built on Cloud Run.
+          allow_gen2: true
+
+          # Optional V2-specific configuration (can be added here)
+          # min_instances: 1 # Example: Keep one instance warm (will cost money)
+          # max_instances: 10
+          # concurrency: 80 # Example: Allow 80 concurrent requests per instance
