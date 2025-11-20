@@ -18,13 +18,5 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }} # Use the secret created earlier
 
-      - name: 🚀 Deploy Cloud Function (V2)
-        uses: google-github-actions/deploy-cloud-functions@v2
-        with:
-          name: helloHttpFunction
-          runtime: nodejs20
-          entry_point: helloHttp
-          project_id: quixotic-folio-478710-e6
-          region: us-west1
-          source_dir: ./
-          environment: gen2
+      - name: Deploy hello_world_function
+      - run: 'gcloud functions deploy helloWorld --gen2 --runtime=nodejs20 --region=us-west1 --source=./ --trigger-http --allow-unauthenticated --entry-point=helloHttp --memory=256MB --timeout=60s'
