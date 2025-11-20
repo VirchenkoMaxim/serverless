@@ -1,0 +1,28 @@
+name: Deploy Cloud Function
+on:
+  push:
+    branches:
+      - main # Trigger on pushes to the main branch
+
+jobs:
+  deploy_function:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🔑 Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }} # Use the secret created earlier
+
+      - name: 🚀 Deploy Cloud Function
+        uses: google-github-actions/deploy-cloud-functions@v2
+        with:
+          name: helloHttpFunction # **Required:** The name you want for your deployed function
+          runtime: nodejs20 # **Required:** Must match the runtime you're using (e.g., nodejs20)
+          entry_point: helloHttp # **Required:** The name of the function exported in your code
+          project_id: quixotic-folio-478710-e6 # **Optional:** Your GCP Project ID (or compute from environment)
+          region: us-central1 # **Optional:** The deployment region
+          source_dir: ./ # **Optional:** Path to the function source code (defaults to repo root)
