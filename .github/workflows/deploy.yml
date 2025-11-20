@@ -17,6 +17,8 @@ jobs:
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }} # Use the secret created earlier
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
 
       - name: Deploy hello_world_function
-      - run: 'gcloud functions deploy helloWorld --gen2 --runtime=nodejs20 --region=us-west1 --source=./ --trigger-http --allow-unauthenticated --entry-point=helloHttp --memory=256MB --timeout=60s'
+        run: 'gcloud functions deploy helloWorld --gen2 --runtime=nodejs20 --region=us-west1 --source=./ --trigger-http --allow-unauthenticated --entry-point=helloHttp --memory=256MB --timeout=60s'
