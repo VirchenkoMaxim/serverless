@@ -21,17 +21,10 @@ jobs:
       - name: 🚀 Deploy Cloud Function (V2)
         uses: google-github-actions/deploy-cloud-functions@v2
         with:
-          name: helloHttp # Use a new name to distinguish it from V1
-          runtime: nodejs20 # Ensure this is a V2-compatible runtime
+          name: helloHttpFunction
+          runtime: nodejs20
           entry_point: helloHttp
           project_id: quixotic-folio-478710-e6
-          region: us-central1
+          region: us-west1
           source_dir: ./
-          # ⭐ Key change for V2 deployment ⭐
-          # This flag enables deployment using Cloud Functions 2nd Generation, built on Cloud Run.
-          allow_gen2: true
-
-          # Optional V2-specific configuration (can be added here)
-          # min_instances: 1 # Example: Keep one instance warm (will cost money)
-          # max_instances: 10
-          # concurrency: 80 # Example: Allow 80 concurrent requests per instance
+          environment: gen2
