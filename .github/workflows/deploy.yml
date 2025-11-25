@@ -27,5 +27,3 @@ jobs:
           entry_point: helloHttp
           region: us-west1
           environment: GEN_2
-
-          memory: 256MB
